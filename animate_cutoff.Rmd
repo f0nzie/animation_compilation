@@ -1,0 +1,11 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Source: https://github.com/dariyasydykova/open_projects/blob/master/ROC_animation/animate_cutoff.r
+
+```{r}
+source("animate_cutoff.r")
+```
+

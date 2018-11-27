@@ -1,0 +1,7 @@
+file_name	seed	formula_x	formula_y
+NA	NA	NA	NA
+2018-11-27-10-39_seed_4420.png	4420	runif(1, -1, 1) * x_i^2 - sin(y_i^2)	runif(1, -1, 1) * y_i^3 - cos(x_i^2)
+2018-11-27-10-39_seed_1067.png	1067	runif(1, -1, 1) * x_i^2 - sin(y_i^2)	runif(1, -1, 1) * y_i^3 - cos(x_i^2)
+2018-11-27-10-39_seed_1602.png	1602	runif(1, -1, 1) * x_i^2 - sin(y_i^2)	runif(1, -1, 1) * y_i^3 - cos(x_i^2)
+2018-11-27-10-39_seed_4670.png	4670	runif(1, -1, 1) * x_i^2 - sin(y_i^2)	runif(1, -1, 1) * y_i^3 - cos(x_i^2)
+2018-11-27-10-40_seed_4550.png	4550	runif(1, -1, 1) * x_i^2 - sin(y_i^2)	runif(1, -1, 1) * y_i^3 - cos(x_i^2)

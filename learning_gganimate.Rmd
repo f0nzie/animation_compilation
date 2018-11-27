@@ -1,0 +1,84 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Source: https://github.com/ropenscilabs/learngganimate/blob/master/animate.md
+
+All of the `transition_` `ease_` `view_` etc. functions in `gganimate` will build a series of static images. To actually assemble those images into an animation, you will need to call the `animate()` function. This function seems simple, but much like file paths, what seems simple can cause great headaches. `animate()` actually combines many “under the hood” features and video rendering concepts that are not obvious to the majority of R users, but can make the difference between a beautiful smooth animation, and a choppy (or even incorrect) animation.
+
+## Controlling animation speed and quality
+
+```{r}
+library(ggplot2)
+library(gganimate)
+
+anim <-
+  ggplot(mtcars, aes(factor(cyl), mpg)) + 
+  geom_boxplot() + 
+  transition_states(
+    gear,
+    transition_length = 3,
+    state_length = 1
+  ) +
+  enter_fade() + 
+  exit_shrink() +
+  ease_aes('linear')
+```
+
+```{r}
+anim
+```
+
+```{r}
+#slow and choppy animation
+animate(anim, nframes = 200, fps = 5)
+```
+
+## Advanced
+
+```{r}
+library(tidyverse)
+library(e1071)
+library(gganimate)
+
+ntimes <- 20  # how many time points to run the bridge?
+nseries <- 10 # how many time series to generate?
+
+# function to generate the brownian bridges
+make_bridges <- function(ntimes, nseries) {
+  replicate(nseries, c(0,rbridge(frequency = ntimes-1))) %>% as.vector()
+}
+
+# construct tibble
+tbl <- tibble(
+  Time = rep(1:ntimes, nseries),
+  Horizontal = make_bridges(ntimes, nseries),
+  Vertical = make_bridges(ntimes, nseries),
+  Series = gl(nseries, ntimes)
+)
+
+base_pic <- tbl %>%
+  ggplot(aes(
+    x = Horizontal, 
+    y = Vertical, 
+    colour = Series)) + 
+  geom_point(
+    show.legend = FALSE,
+    size = 5) + 
+  coord_equal() + 
+  xlim(-2, 2) + 
+  ylim(-2, 2) +
+  transition_time(time = Time) + 
+  shadow_wake(wake_length = 0.2)
+
+animate(base_pic, nframes = 100, fps = 10)
+```
+
+## `detail` argument
+
+```{r}
+#increase detail
+animate(base_pic, nframes = 100, fps = 10, type = "cairo", detail = 3)
+```
+
